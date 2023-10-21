@@ -1,10 +1,11 @@
 import os
 
-from selene import browser, have, command, Collection
+from selene import browser, have, command
 from selenium.webdriver import Keys
 
 
 class RegistrationForm:
+
     def open(self):
         browser.open("/automation-practice-form")
 
@@ -49,9 +50,5 @@ class RegistrationForm:
         browser.element('footer').execute_script('element.remove()')
         browser.element('#submit').perform(command.js.click)
 
-    @property
-    def registered_info(self) -> Collection:
-        return browser.element('.table-responsive').all('td:nth-of-type(2)')
-
-
-registration_form = RegistrationForm()
+    def assert_registered_info(self, *args):
+        browser.element('.table-responsive').all('td:nth-of-type(2)').should(have.exact_texts(args))

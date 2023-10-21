@@ -1,9 +1,11 @@
 from selene import have
 
-from qa_guru_python_8_10.form.registration_form import registration_form
+from qa_guru_python_8_10.form.registration_form import RegistrationForm
 
 
 def test_demoqa_complete_form():
+    registration_form = RegistrationForm()
+
     # GIVEN
     registration_form.open()
 
@@ -22,7 +24,7 @@ def test_demoqa_complete_form():
     registration_form.submit_form()
 
     # THEN
-    registration_form.registered_info.should(have.exact_texts(
+    registration_form.assert_registered_info(
         'FirstName LastName',
         'mymail@test.ru',
         'Male',
@@ -32,5 +34,5 @@ def test_demoqa_complete_form():
         'Sports',
         'sample.jpg',
         'My current address',
-        'NCR Delhi')
+        'NCR Delhi'
     )
