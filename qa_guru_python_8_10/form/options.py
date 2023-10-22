@@ -11,3 +11,7 @@ class Hobby(Enum):
     sports = 'Sports'
     reading = 'Reading'
     music = 'Music'
+
+
+gender = Gender
+hobby = Hobby

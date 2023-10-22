@@ -1,5 +1,5 @@
 from qa_guru_python_8_10.form.registration_form import RegistrationForm
-from qa_guru_python_8_10.form.options import Hobby as hobby, Gender as gender
+from qa_guru_python_8_10.form.options import gender, hobby
 
 
 def test_demoqa_complete_form():

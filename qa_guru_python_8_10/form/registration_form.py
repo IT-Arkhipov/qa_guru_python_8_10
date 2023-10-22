@@ -1,5 +1,5 @@
 import os
-from enum import Enum
+
 from selene import browser, have, command
 from selenium.webdriver import Keys
 
