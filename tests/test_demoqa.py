@@ -1,14 +1,13 @@
-from qa_guru_python_8_10.form.registration_form import RegistrationForm
+from qa_guru_python_8_10.application import app
 from qa_guru_python_8_10 import users
 
 
-def test_demoqa_complete_form():
-    registration_form = RegistrationForm()
+def test_demoqa_fill_text_box():
     # GIVEN
-    registration_form.open()
+    app.left_panel.open_simple_registration_form()
 
     # WHEN
-    registration_form.fill_form(users.user)
+    app.left_panel.fill_form(users.user)
 
     # THEN
-    registration_form.assert_registered_info(users.user)
+    app.left_panel.assert_filled_form(users.user)
