@@ -1,37 +1,14 @@
 from qa_guru_python_8_10.form.registration_form import RegistrationForm
-from qa_guru_python_8_10.form.options import gender, hobby
+from qa_guru_python_8_10 import users
 
 
 def test_demoqa_complete_form():
     registration_form = RegistrationForm()
-
     # GIVEN
     registration_form.open()
 
     # WHEN
-    registration_form.fill_user_name('FirstName', 'LastName')
-    registration_form.fill_email('mymail@test.ru')
-    registration_form.select_gender(gender.male.value)
-    registration_form.fill_phone('9170770905')
-    registration_form.fill_birthday('11 Oct 2023')
-    registration_form.select_subject('Maths')
-    registration_form.select_hobby(hobby.sports.value)
-    registration_form.upload_picture('sample.jpg')
-    registration_form.fill_address('My current address')
-    registration_form.select_state('NCR')
-    registration_form.select_city('Delhi')
-    registration_form.submit_form()
+    registration_form.fill_form(users.user)
 
     # THEN
-    registration_form.assert_registered_info(
-        'FirstName LastName',
-        'mymail@test.ru',
-        'Male',
-        '9170770905',
-        '11 October,2023',
-        'Maths',
-        'Sports',
-        'sample.jpg',
-        'My current address',
-        'NCR Delhi'
-    )
+    registration_form.assert_registered_info(users.user)

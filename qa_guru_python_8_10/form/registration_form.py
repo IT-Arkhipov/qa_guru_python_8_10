@@ -1,8 +1,8 @@
 import os
-from enum import Enum
 
 from selene import browser, have, command
 from selenium.webdriver import Keys
+from qa_guru_python_8_10.users import User
 
 
 class RegistrationForm:
@@ -20,46 +20,71 @@ class RegistrationForm:
     def open(self):
         browser.open("/automation-practice-form")
 
-    def fill_user_name(self, first_name: str, last_name: str):
+    def fill_form(self, user: User):
+        self._fill_user_name(user.first_name, user.last_name)
+        self._fill_email(user.email)
+        self._select_gender(user.gender)
+        self._fill_phone(user.phone)
+        self._fill_birthday(user.date)
+        self._select_subject(user.subject)
+        self._select_hobby(user.hobby)
+        self._upload_picture(user.file_name)
+        self._fill_address(user.address)
+        self._select_state(user.state)
+        self._select_city(user.city)
+        self._submit_form()
+
+    def assert_registered_info(self, user: User):
+        browser.element('.table-responsive').all('td:nth-of-type(2)').should(have.exact_texts(
+            ' '.join((user.first_name, user.last_name)),
+            user.email,
+            user.gender,
+            user.phone,
+            user.checked_date,
+            user.subject,
+            user.hobby,
+            user.file_name,
+            user.address,
+            ' '.join((user.state, user.city))
+        ))
+
+    def _fill_user_name(self, first_name: str, last_name: str):
         self.first_name.type(first_name)
         self.last_name.type(last_name)
 
-    def fill_email(self, email: str):
+    def _fill_email(self, email: str):
         self.user_email.type(email)
 
-    def select_gender(self, gender: str):
+    def _select_gender(self, gender: str):
         self.gender.all('label').element_by(have.text(gender)).click()
 
-    def fill_phone(self, number: str):
+    def _fill_phone(self, number: str):
         self.phone_number.type(number)
 
-    def fill_birthday(self, date: str):
+    def _fill_birthday(self, date: str):
         self.birth_day.send_keys(Keys.CONTROL + 'a').send_keys(date).press_enter()
 
-    def select_subject(self, subject: str):
+    def _select_subject(self, subject: str):
         self.subject.type(subject).press_enter()
 
-    def select_hobby(self, hobby: str):
+    def _select_hobby(self, hobby: str):
         self.hobby.perform(command.js.scroll_into_view)
         self.hobby.all('label').element_by(have.text(hobby)).click()
 
-    def upload_picture(self, file_name: str):
+    def _upload_picture(self, file_name: str):
         browser.element('#uploadPicture').send_keys(os.path.abspath('img/' + file_name))
 
-    def fill_address(self, address: str):
+    def _fill_address(self, address: str):
         browser.element('#currentAddress').type(address)
 
-    def select_state(self, state: str):
+    def _select_state(self, state: str):
         browser.element('#state').perform(command.js.scroll_into_view).click()
         browser.element('#react-select-3-input').type(state).press_enter()
 
-    def select_city(self, city: str):
-        browser.element('#city').click()
+    def _select_city(self, city: str):
+        browser.element('#city').perform(command.js.scroll_into_view).click()
         browser.element('#react-select-4-input').type(city).press_enter()
 
-    def submit_form(self):
+    def _submit_form(self):
         browser.element('footer').execute_script('element.remove()')
         browser.element('#submit').perform(command.js.click)
-
-    def assert_registered_info(self, *args):
-        browser.element('.table-responsive').all('td:nth-of-type(2)').should(have.exact_texts(args))
