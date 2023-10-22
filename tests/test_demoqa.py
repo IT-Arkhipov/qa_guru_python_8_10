@@ -1,5 +1,3 @@
-from selene import have
-
 from qa_guru_python_8_10.form.registration_form import RegistrationForm
 
 
