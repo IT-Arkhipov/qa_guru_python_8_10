@@ -1,5 +1,6 @@
 import os
 from enum import Enum
+
 from selene import browser, have, command
 from selenium.webdriver import Keys
 
@@ -26,7 +27,7 @@ class RegistrationForm:
     def fill_email(self, email: str):
         self.user_email.type(email)
 
-    def select_gender(self, gender: Enum):
+    def select_gender(self, gender: str):
         self.gender.all('label').element_by(have.text(gender)).click()
 
     def fill_phone(self, number: str):
@@ -38,7 +39,7 @@ class RegistrationForm:
     def select_subject(self, subject: str):
         self.subject.type(subject).press_enter()
 
-    def select_hobby(self, hobby: Enum):
+    def select_hobby(self, hobby: str):
         self.hobby.perform(command.js.scroll_into_view)
         self.hobby.all('label').element_by(have.text(hobby)).click()
 
