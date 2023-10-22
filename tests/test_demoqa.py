@@ -1,4 +1,5 @@
 from qa_guru_python_8_10.form.registration_form import RegistrationForm
+from qa_guru_python_8_10.form.options import Hobby as hobby, Gender as gender
 
 
 def test_demoqa_complete_form():
@@ -10,11 +11,11 @@ def test_demoqa_complete_form():
     # WHEN
     registration_form.fill_user_name('FirstName', 'LastName')
     registration_form.fill_email('mymail@test.ru')
-    registration_form.select_gender('Male')
+    registration_form.select_gender(gender.male)
     registration_form.fill_phone('9170770905')
     registration_form.fill_birthday('11 Oct 2023')
     registration_form.select_subject('Maths')
-    registration_form.select_hobby('Sports')
+    registration_form.select_hobby(hobby.sports)
     registration_form.upload_picture('sample.jpg')
     registration_form.fill_address('My current address')
     registration_form.select_state('NCR')

@@ -1,36 +1,46 @@
 import os
-
+from enum import Enum
 from selene import browser, have, command
 from selenium.webdriver import Keys
 
 
 class RegistrationForm:
 
+    def __init__(self):
+        self.first_name = browser.element('#firstName')
+        self.last_name = browser.element('#lastName')
+        self.user_email = browser.element('#userEmail')
+        self.gender = browser.element('#genterWrapper')
+        self.phone_number = browser.element('#userNumber')
+        self.birth_day = browser.element('#dateOfBirthInput')
+        self.subject = browser.element('#subjectsInput')
+        self.hobby = browser.element('#hobbiesWrapper')
+
     def open(self):
         browser.open("/automation-practice-form")
 
     def fill_user_name(self, first_name: str, last_name: str):
-        browser.element('#firstName').type(first_name)
-        browser.element('#lastName').type(last_name)
+        self.first_name.type(first_name)
+        self.last_name.type(last_name)
 
     def fill_email(self, email: str):
-        browser.element('#userEmail').type(email)
+        self.user_email.type(email)
 
-    def select_gender(self, gender: str):
-        browser.element('#genterWrapper').all('label').element_by(have.text(gender)).click()
+    def select_gender(self, gender: Enum):
+        self.gender.all('label').element_by(have.text(gender)).click()
 
     def fill_phone(self, number: str):
-        browser.element('#userNumber').type(number)
+        self.phone_number.type(number)
 
     def fill_birthday(self, date: str):
-        browser.element('#dateOfBirthInput').send_keys(Keys.CONTROL + 'a').send_keys(date).press_enter()
+        self.birth_day.send_keys(Keys.CONTROL + 'a').send_keys(date).press_enter()
 
     def select_subject(self, subject: str):
-        browser.element('#subjectsInput').type(subject).press_enter()
+        self.subject.type(subject).press_enter()
 
-    def select_hobby(self, hobby: str):
-        browser.element('#hobbiesWrapper').perform(command.js.scroll_into_view)
-        browser.element('#hobbiesWrapper').all('label').element_by(have.text(hobby)).click()
+    def select_hobby(self, hobby: Enum):
+        self.hobby.perform(command.js.scroll_into_view)
+        self.hobby.all('label').element_by(have.text(hobby)).click()
 
     def upload_picture(self, file_name: str):
         browser.element('#uploadPicture').send_keys(os.path.abspath('img/' + file_name))
