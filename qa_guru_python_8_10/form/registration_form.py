@@ -1,5 +1,5 @@
 import os
-from enum import Enum
+import platform
 
 from selene import browser, have, command
 from selenium.webdriver import Keys
@@ -34,7 +34,11 @@ class RegistrationForm:
         self.phone_number.type(number)
 
     def fill_birthday(self, date: str):
-        self.birth_day.send_keys(Keys.CONTROL + 'a').send_keys(date).press_enter()
+        os_base = platform.system()
+        if os_base == 'Darwin':
+            self.birth_day.send_keys(Keys.COMMAND + 'a').send_keys(date).press_enter()
+        else:
+            self.birth_day.send_keys(Keys.CONTROL + 'a').send_keys(date).press_enter()
 
     def select_subject(self, subject: str):
         self.subject.type(subject).press_enter()
