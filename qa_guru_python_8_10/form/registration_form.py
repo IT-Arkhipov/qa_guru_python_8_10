@@ -1,4 +1,4 @@
-import os
+from os.path import dirname, abspath
 import platform
 
 from selene import browser, have, command
@@ -77,7 +77,9 @@ class RegistrationForm:
         self.hobby.all('label').element_by(have.text(hobby)).click()
 
     def _upload_picture(self, file_name: str):
-        browser.element('#uploadPicture').send_keys(os.path.abspath('img/' + file_name))
+        # browser.element('#uploadPicture').send_keys(os.path.abspath('img/' + file_name))
+        browser.element('#uploadPicture').send_keys(dirname(dirname(dirname(abspath(__file__)))) +
+                                                    '/tests/img/' + file_name)
 
     def _fill_address(self, address: str):
         browser.element('#currentAddress').type(address)
