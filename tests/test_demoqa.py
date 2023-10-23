@@ -1,5 +1,7 @@
 import os
-from selene import browser, have, command
+import platform
+
+from selene import browser, have, command, be
 from selenium.webdriver.common.keys import Keys
 
 
@@ -14,7 +16,18 @@ def test_demoqa_complete_form():
     browser.element('#userEmail').type('mymail@test.ru')
     browser.element('#genterWrapper').all('label').element_by(have.text('Male')).click()
     browser.element('#userNumber').type('9170770905')
-    browser.element('#dateOfBirthInput').send_keys(Keys.CONTROL + 'a').send_keys('11 Oct 2023').press_enter()
+
+    # browser.element('#dateOfBirthInput').click()
+    # browser.element('.react-datepicker__year-select').click().element('option[value="2023"]').click()
+    # browser.element('.react-datepicker__month-select').click().element('option[value="9"]').click()
+    # browser.element('.react-datepicker__day--011').click()
+
+    os_base = platform.system()
+    if os_base == 'Darwin':
+        browser.element('#dateOfBirthInput').send_keys(Keys.COMMAND + 'a').send_keys('11 Oct 2023').press_enter()
+    else:
+        browser.element('#dateOfBirthInput').send_keys(Keys.CONTROL + 'a').send_keys('11 Oct 2023').press_enter()
+
     browser.element('#subjectsInput').type('Maths').press_enter()
     browser.element('#hobbiesWrapper').perform(command.js.scroll_into_view)
     browser.element('#hobbiesWrapper').all('label').element_by(have.text('Sports')).click()
