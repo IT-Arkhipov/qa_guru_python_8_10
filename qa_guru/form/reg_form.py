@@ -1,4 +1,3 @@
-import os
 import platform
 
 from selene import browser, have, command
@@ -48,7 +47,7 @@ class RegistrationForm:
         self.hobby.all('label').element_by(have.text(hobby)).click()
 
     def upload_picture(self, file_name: str):
-        browser.element('#uploadPicture').send_keys(os.path.abspath('img/' + file_name))
+        browser.element('#uploadPicture').send_keys(file_name)
 
     def fill_address(self, address: str):
         browser.element('#currentAddress').type(address)

@@ -1,5 +1,7 @@
-from qa_guru_python_8_10.form.registration_form import RegistrationForm
-from qa_guru_python_8_10.form.options import gender, hobby
+import os
+
+from qa_guru.form.reg_form import RegistrationForm
+from qa_guru.form.options import gender, hobby
 
 
 def test_demoqa_complete_form():
@@ -16,7 +18,7 @@ def test_demoqa_complete_form():
     registration_form.fill_birthday('11 Oct 2023')
     registration_form.select_subject('Maths')
     registration_form.select_hobby(hobby.sports.value)
-    registration_form.upload_picture('sample.jpg')
+    registration_form.upload_picture(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'img/sample.jpg'))
     registration_form.fill_address('My current address')
     registration_form.select_state('NCR')
     registration_form.select_city('Delhi')
